@@ -16,7 +16,7 @@ export class UserService {
   ) { }
 
   getAll() {
-    return this.http.get<Array<User>>(this.baseUrl + 'User/GetAll', {});
+    return this.http.get<User[]>(this.baseUrl + 'User/GetAll', {});
   }
 
   create(model: UserForCreate) {

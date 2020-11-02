@@ -12,6 +12,7 @@ namespace app_home_api.Helpers
     {
         public DtoToEfMappingProfile()
         {
+            CreateMap<RoleDto, Role>();
             CreateMap<UserDto, User>();
             CreateMap<UserForCreateDto, User>();
             CreateMap<UserForLoginDto, User>();

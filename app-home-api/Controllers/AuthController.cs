@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using app_home_api.Dto;
 using app_home_api.Repository.Interface;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,7 @@ namespace app_home_api.Controllers
             _config = config;
             _repo = repo;
         }
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {

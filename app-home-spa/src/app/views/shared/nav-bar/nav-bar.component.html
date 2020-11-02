@@ -10,18 +10,20 @@
     App Home
   </a>
   <div class="navbar-nav">
-    
-    <a class="nav-item nav-link active" routerLink="/app-home" title="Grid" aria-label="Grid">
-      App Home
+    <a class="nav-item nav-link active" routerLink="/app-home/role" title="Role" aria-label="Role">
+      Role
     </a>
-    <a class="nav-item nav-link active" routerLink="/grid" title="Grid" aria-label="Grid">
-      Grid
+    <a class="nav-item nav-link active" routerLink="/app-home/category" title="Category" aria-label="Category">
+      Category
     </a>
-    <a class="nav-item nav-link active" routerLink="/chart" title="Chart" aria-label="Chart">
-      Chart
+    <a class="nav-item nav-link active" routerLink="/app-home/bpfc" title="BPFC" aria-label="BPFC">
+      BPFC
     </a>
-    <a class="nav-item nav-link active" routerLink="/schedule" title="Schedule" aria-label="Schedule">
-      Schedule 
+    <a class="nav-item nav-link active" routerLink="/app-home/user" title="User" aria-label="User">
+      User 
+    </a>
+    <a class="nav-item nav-link active" (click)='signOut()'>
+      Sign-Out
     </a>
   </div>
 </nav>

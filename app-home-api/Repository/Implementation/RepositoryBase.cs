@@ -83,7 +83,9 @@ namespace app_home_api.Repository.Interface
 
         public void Update(T entity)
         {
+            _context.Entry(entity).State = EntityState.Modified;
             _context.Set<T>().Update(entity);
+
         }
         public void AddRange(List<T> entity)
         {

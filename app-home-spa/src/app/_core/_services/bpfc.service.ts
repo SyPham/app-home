@@ -16,16 +16,16 @@ export class BpfcService {
   ) { }
 
   getAll() {
-    return this.http.get<Array<Bpfc>>(this.baseUrl + 'Bpfc/GetAll', {});
+    return this.http.get<Bpfc[]>(this.baseUrl + 'BPFC/GetAll', {});
   }
 
   create(model: BpfcForCreate) {
-    return this.http.post(this.baseUrl + 'Bpfc/Create', model);
+    return this.http.post(this.baseUrl + 'BPFC/Create', model);
   }
   update(model: BpfcForCreate) {
-    return this.http.put(this.baseUrl + 'Bpfc/Update', model);
+    return this.http.put(this.baseUrl + 'BPFC/Update', model);
   }
   delete(id: number) {
-    return this.http.delete(this.baseUrl + 'Bpfc/Delete/' + id);
+    return this.http.delete(this.baseUrl + 'BPFC/Delete/' + id);
   }
 }

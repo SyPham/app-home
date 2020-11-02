@@ -12,7 +12,6 @@ namespace app_home_api.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    [Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryRepository _repoCategory;

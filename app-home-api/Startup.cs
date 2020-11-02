@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using app_home_api.Helpers;
 using app_home_api.Models;
 using app_home_api.Repository.Implementation;
 using app_home_api.Repository.Interface;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace app_home_api
@@ -42,6 +45,7 @@ namespace app_home_api
                     .AllowCredentials());
             });
             var connectionStrings = Configuration.GetSection("ConnectionStrings").Get<ConnectionString>();
+            var appsettings = Configuration.GetSection("Appsettings").Get<Appsettings>();
             services.AddDbContext<DataContext>(opt =>
               opt.UseSqlServer(connectionStrings.DefaultConnection));
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -54,22 +58,39 @@ namespace app_home_api
                 return new Mapper(AutoMapperConfig.RegisterMappings());
             });
             services.AddSingleton(AutoMapperConfig.RegisterMappings());
+            services.AddAuthentication(options =>
+           {
+               options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+               options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+           }).AddJwtBearer(options =>
+              {
+                  options.RequireHttpsMetadata = false;
+                  options.SaveToken = true;
+                  options.TokenValidationParameters = new TokenValidationParameters
+                  {
+                      ValidateIssuerSigningKey = true,
+                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                          .GetBytes(appsettings.Token)),
+                      ValidateIssuer = false,
+                      ValidateAudience = false
+                  };
+              });
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "App Home", Version = "v1" });
+             {
+                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "App Home", Version = "v1" });
 
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
-                });
+                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                 {
+                     Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+                     Name = "Authorization",
+                     In = ParameterLocation.Header,
+                     Type = SecuritySchemeType.ApiKey,
+                     Scheme = "Bearer"
+                 });
 
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                     {
+                 c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                      {
                         {
                             new OpenApiSecurityScheme
                             {
@@ -85,12 +106,13 @@ namespace app_home_api
                             },
                             new List<string>()
                     }
-                });
+                 });
 
-            });
+             });
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IBPFCRepository, BPFCRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
 

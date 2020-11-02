@@ -10,6 +10,6 @@ namespace app_home_api.Dto
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public string Role { get; set; }
+        public Role Role { get; set; }
     }
 }

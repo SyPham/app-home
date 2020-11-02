@@ -15,6 +15,10 @@ namespace app_home_api.Helpers
             CreateMap<User, UserDto>();
             CreateMap<User, UserForLoginDto>();
             CreateMap<User, UserForDetailDto>();
+            CreateMap<Role, RoleDto>();
+            CreateMap<BPFC, BPFCDto>()
+            .ForMember(d => d.Username, o => o.MapFrom(s => s.User.Username))
+            .ForMember(d => d.Category, o => o.MapFrom(s => s.Category.Name));
         }
     }
 }

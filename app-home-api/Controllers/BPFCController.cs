@@ -16,7 +16,6 @@ namespace app_home_api.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    [Authorize]
     public class BPFCController : ControllerBase
     {
         private readonly ILogger<BPFCController> _logger;
@@ -38,7 +37,7 @@ namespace app_home_api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var BPFCs = await _repoBPFC.FindAll().ProjectTo<BPFCDto>(_configMapper).ToListAsync();
+            var BPFCs = await _repoBPFC.FindAll().Include(x=>x.Category).Include(x=>x.User).ProjectTo<BPFCDto>(_configMapper).ToListAsync();
             return Ok(BPFCs);
         }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as Swal from 'sweetalert2/dist/sweetalert2';
+import Swal from 'sweetalert2';
 @Injectable({
   providedIn: 'root'
 })

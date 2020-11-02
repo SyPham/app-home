@@ -1,3 +1,37 @@
-<p>
-  bpfc works!
-</p>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <ejs-grid #grid (actionBegin)="actionBegin($event)" gridLines='Both' (actionComplete)="actionComplete($event)"
+        [toolbar]='toolbarOptions' [dataSource]='data' allowPaging='true' showColumnMenu='true' [allowSorting]='true'
+        allowResizing='true' [allowExcelExport]='true' allowFiltering='true' [filterSettings]='filterSettings'
+        [pageSettings]='pageSettings' (recordDoubleClick)='onDoubleClick($event)' (toolbarClick)='toolbarClick($event)'
+        [editSettings]='editSettings'>
+        <e-columns>
+          <e-column field='id' headerText='#' width='70' [allowEditing]='false' textAlign='Center'>
+            <ng-template #template let-data>
+              {{NO(data.index)}}
+            </ng-template>
+          </e-column>
+          <e-column field='username' headerText='From Who' [allowEditing]='false' width='200' textAlign='Center'>
+          </e-column>
+          <e-column field='name' headerText='Name' width='200' textAlign='Center'>
+          </e-column>
+          <e-column field='description' headerText='Description' width='200' textAlign='Center'>
+          </e-column>
+          <e-column field='category' headerText='Category' editType='dropdownedit' width='200' textAlign='Center'>
+            <ng-template #editTemplate let-data>
+              <ejs-dropdownlist [dataSource]='categories' [value]="data.category" [fields]='fieldsCategory'
+                [allowFiltering]='true' (change)='onChangeCategory($event)'>
+              </ejs-dropdownlist>
+            </ng-template>
+            <ng-template #template let-data>
+              {{data.category}}
+            </ng-template>
+          </e-column>
+        </e-columns>
+      </ejs-grid>
+
+    </div>
+  </div>
+
+</div>

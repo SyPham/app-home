@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 namespace app_home_api.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/[controller]/[action]")]
     public class UserController : ControllerBase
     {

@@ -16,7 +16,7 @@ export class RoleService {
   ) { }
 
   getAll() {
-    return this.http.get<Array<Role>>(this.baseUrl + 'Role/GetAll', {});
+    return this.http.get<Role[]>(this.baseUrl + 'Role/GetAll', {});
   }
 
   create(model: Role) {
